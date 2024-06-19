@@ -29,7 +29,27 @@ Para rodar este aplicativo localmente, siga as etapas abaixo:
 
 2. **Você pode executar o aplicativo usando sua IDE preferida ou usando o Maven**
 
-3. **Acesso à documentação da API (Swagger - opcional):**
+3. **Crie um schema no seu banco de dados de preferência e configure no application.properties com os seus dados**
+   ```bash
+      CREATE TABLE users (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       email VARCHAR(255) UNIQUE NOT NULL,
+       password VARCHAR(255) NOT NULL,
+       phone VARCHAR(20) NOT NULL,
+       role VARCHAR(20) NOT NULL
+   );
+
+      CREATE TABLE users (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       email VARCHAR(255) UNIQUE NOT NULL,
+       password VARCHAR(255) NOT NULL,
+       phone VARCHAR(20) NOT NULL,
+       role VARCHAR(20) NOT NULL
+   );
+
+4. **Acesso à documentação da API (Swagger - opcional):**
    
     Após iniciar o aplicativo, você pode acessar a documentação da API no Swagger UI:
   
