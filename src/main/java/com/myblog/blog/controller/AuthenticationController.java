@@ -28,12 +28,6 @@ public class AuthenticationController {
     @Autowired
     private UserRepository userRepository;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, JwtService jwtService, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
-        this.userRepository = userRepository;
-    }
-
     @PostMapping
     public ResponseEntity login(@RequestBody @Valid AuthenticationData authData){
         try{

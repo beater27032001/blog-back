@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,11 +23,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserRepository userRepository;
-
-    public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {
-        this.jwtService = jwtService;
-        this.userRepository = userRepository;
-    }
 
     @Override
     // Método herdado de OncePerRequestFilter que executa a lógica de filtragem para cada requisição.
@@ -42,8 +39,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //Busca o usuário no banco de dados pelo email obtido do token JWT.
             var user = userRepository.findByEmail(subject);
 
-            //Cria um objeto de autenticação UsernamePasswordAuthenticationToken com base no usuário encontrado e suas autorizações.
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            if (user != null){
+                var authorities = user.getAuthorities();
+                //Cria um objeto de autenticação UsernamePasswordAuthenticationToken com base no usuário encontrado e suas autorizações.
+                var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+                // Este objeto contém informações adicionais sobre a requisição, como o endereço IP e o nome do host remoto da requisição.
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+
         }
 
         //Continua o fluxo da requisição atual.

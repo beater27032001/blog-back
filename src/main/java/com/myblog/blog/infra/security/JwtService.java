@@ -6,12 +6,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.myblog.blog.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 //É responsável por gerar tokens JWT com base nas informações do usuário, usando uma chave secreta configurada (jwtSecret).
@@ -36,6 +38,8 @@ public class JwtService {
                     .withIssuer(ISSUER)
                     //Define o assunto (subject) do token como o nome de usuário do usuário fornecido
                     .withSubject(user.getUsername())
+                    .withClaim("roles", user.getAuthorities().stream()
+                            .map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 //                    .withExpiresAt(Date.from(expirationData()))
                     //Finaliza e assina o token usando o algoritmo especificado (HMAC256 com a chave secreta)
                     .sign(algorithm);

@@ -19,11 +19,6 @@ public class ArticleService {
     @Autowired
     private UserRepository userRepository;
 
-    public ArticleService(ArticleRepository articleRepository, UserRepository userRepository) {
-        this.articleRepository = articleRepository;
-        this.userRepository = userRepository;
-    }
-
     public ArticleListDetailsDTO createArticle(ArticleCreateDTO articleCreateDTO){
         User author = userRepository.findById(articleCreateDTO.authorId()).orElseThrow(() -> new RuntimeException("Author not found."));
         if(!author.getRole().equals(Role.ROLE_ADMIN)){

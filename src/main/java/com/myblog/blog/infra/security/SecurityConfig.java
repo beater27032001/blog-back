@@ -23,10 +23,6 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
-
     //Método de configuração que retorna um SecurityFilterChain, que define a lógica de segurança HTTP.
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> {
                     //Permite acesso ao endpoint /login sem autenticação.
                     req.requestMatchers("/login").permitAll();
+                    req.requestMatchers("/users").permitAll();
                     //Permite acesso aos endpoints relacionados à documentação Swagger sem autenticação.
                     req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     // Requer autenticação para qualquer outra requisição.

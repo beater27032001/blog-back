@@ -16,18 +16,13 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private final BCryptPasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private BCryptPasswordEncoder passwordEncoder;
 
     public UserListDetailsDTO createUser(UserCreateDTO userCreateDTO){
         User user = new User();
         user.setName(userCreateDTO.name());
         user.setEmail(userCreateDTO.email());
-        user.setPassword(userCreateDTO.password());
+        user.setPassword(passwordEncoder.encode(userCreateDTO.password()));
         user.setPhone(userCreateDTO.phone());
         user.setRole(Role.ROLE_USER); // Default role
 
