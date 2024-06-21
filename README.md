@@ -40,13 +40,14 @@ Para rodar este aplicativo localmente, siga as etapas abaixo:
        role VARCHAR(20) NOT NULL
    );
 
-      CREATE TABLE users (
+      CREATE TABLE articles (
        id BIGINT AUTO_INCREMENT PRIMARY KEY,
-       name VARCHAR(255) NOT NULL,
-       email VARCHAR(255) UNIQUE NOT NULL,
-       password VARCHAR(255) NOT NULL,
-       phone VARCHAR(20) NOT NULL,
-       role VARCHAR(20) NOT NULL
+       title VARCHAR(255),
+       content TEXT,
+       author_id BIGINT NOT NULL,
+       CONSTRAINT fk_author
+        FOREIGN KEY (author_id)
+        REFERENCES users (id)
    );
 
 4. **Acesso à documentação da API (Swagger - opcional):**
