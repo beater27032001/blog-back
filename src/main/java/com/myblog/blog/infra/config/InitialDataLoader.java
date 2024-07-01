@@ -42,5 +42,20 @@ public class InitialDataLoader implements CommandLineRunner {
         } else {
             System.out.println("Usuário admin já está cadastrado.");
         }
+//        // Cria um usuário genérico de teste se não existir
+//        if (userRepository.findByEmail("user1@test.com") == null) {
+//            User user = new User();
+//            user.setName("User Test1");
+//            user.setEmail("user@test1.com");
+//            user.setPassword(passwordEncoder.encode("password"));
+//            user.setPhone("123456789");
+//            user.setRole(Role.ROLE_ADMIN);
+//
+//            userRepository.save(user);
+//
+//            System.out.println("Usuário genérico de teste criado com sucesso!");
+//        } else {
+//            System.out.println("Usuário genérico de teste já está cadastrado.");
+//        }
     }
 }

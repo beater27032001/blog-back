@@ -23,16 +23,18 @@ public class ArticleService {
         User author = userRepository.findById(articleCreateDTO.authorId()).orElseThrow(() -> new RuntimeException("Author not found."));
         if(!author.getRole().equals(Role.ROLE_ADMIN)){
             throw new RuntimeException("Only admins can post articles");
+        }else {
+            Article article = new Article();
+            article.setTitle(articleCreateDTO.title());
+            article.setContent(articleCreateDTO.content());
+            article.setAuthor(author);
+
+            article = articleRepository.save(article);
+
+            return new ArticleListDetailsDTO(article.getId(), article.getTitle(), article.getContent(), author.getName(), author.getEmail());
         }
 
-        Article article = new Article();
-        article.setTitle(articleCreateDTO.title());
-        article.setContent(articleCreateDTO.content());
-        article.setAuthor(author);
 
-        article = articleRepository.save(article);
-
-        return new ArticleListDetailsDTO(article.getId(), article.getTitle(), article.getContent(), author.getName(), author.getEmail());
     }
 
     public ArticleListDetailsDTO updateArticle(ArticleUpdateDTO articleUpdateDTO){

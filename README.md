@@ -74,9 +74,9 @@ Para rodar este aplicativo localmente, siga as etapas abaixo:
 - **PUT** /articles/{id}: Atualiza um artigo existente pelo ID (requer autenticação do autor ou ROLE_ADMIN).
 - **DELETE** /articles/{id}: Exclui um artigo pelo ID (requer autenticação do autor ou ROLE_ADMIN).
 
-## Status: Em Andamento
+## Status: Concluido
 
-  Este projeto está atualmente em desenvolvimento. Estamos trabalhando para implementar novos recursos e melhorias conforme necessário.
+  Este projeto está concluido.
 
 
 
