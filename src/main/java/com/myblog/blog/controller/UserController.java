@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class UserController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<UserListDetailsDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO){
         UserListDetailsDTO newUser = userService.createUser(userCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
@@ -43,6 +45,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<UserListDetailsDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO){
         UserListDetailsDTO userUpdate = userService.updateUser(userUpdateDTO);
         return ResponseEntity.ok(userUpdate);
@@ -50,6 +53,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();

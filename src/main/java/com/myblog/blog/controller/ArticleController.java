@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class ArticleController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
+    @Transactional
     public ResponseEntity<ArticleListDetailsDTO> createArticle(@Valid @RequestBody ArticleCreateDTO articleCreateDTO){
         ArticleListDetailsDTO newArticle = articleService.createArticle(articleCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newArticle);
@@ -44,6 +46,7 @@ public class ArticleController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<ArticleListDetailsDTO> updateArticle(@PathVariable Long id, @Valid @RequestBody ArticleUpdateDTO articleUpdateDTO){
         ArticleListDetailsDTO articleUpdate = articleService.updateArticle(articleUpdateDTO);
         return ResponseEntity.ok(articleUpdate);
@@ -51,6 +54,7 @@ public class ArticleController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity deleteArticle(@PathVariable Long id){
         articleService.deleteArticle(id);
         return ResponseEntity.noContent().build();
